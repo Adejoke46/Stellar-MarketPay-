@@ -1,5 +1,6 @@
 use soroban_sdk::{symbol_short, Address, BytesN, Env, String, Vec};
 
+use crate::governance::DEFAULT_EXECUTION_DELAY_SECONDS;
 use crate::types::*;
 
 /// Initialize the contract. Sets the admin and default configuration.
@@ -20,6 +21,10 @@ pub(crate) fn initialize(env: Env, admin: Address, treasury_address: Address) {
     env.storage()
         .instance()
         .set(&DataKey::DefaultTimeoutSeconds, &DEFAULT_TIMEOUT_SECONDS);
+    env.storage().instance().set(
+        &DataKey::ExecutionDelaySeconds,
+        &DEFAULT_EXECUTION_DELAY_SECONDS,
+    );
     env.storage().instance().set(&DataKey::Version, &1u32);
 
     let mut admins: Vec<Address> = Vec::new(&env);
