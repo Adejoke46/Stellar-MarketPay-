@@ -144,7 +144,7 @@ pub(crate) fn resolve_proposal(env: Env, proposal_id: u32) {
 
 /// Execute a passed proposal after the configured timelock has elapsed.
 pub(crate) fn execute_proposal(env: Env, proposal_id: u32) {
-    check_not_frozen(&env);
+    check_not_frozen(&env, proposal_id);
 
     let mut proposal = get_proposal(env.clone(), proposal_id);
     if !proposal.resolved {
@@ -176,7 +176,7 @@ pub(crate) fn execute_proposal(env: Env, proposal_id: u32) {
 
 pub(crate) fn set_execution_delay(env: Env, admin: Address, seconds: u64) {
     admin.require_auth();
-    check_not_frozen(&env);
+    check_not_frozen(&env, seconds);
     let stored_admin: Address = env
         .storage()
         .instance()

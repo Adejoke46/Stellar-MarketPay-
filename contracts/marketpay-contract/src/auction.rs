@@ -241,7 +241,7 @@ pub(crate) fn get_revealed_bids(env: Env, job_id: String) -> Vec<RevealedBid> {
 /// refunded atomically before the new bid is recorded.
 pub(crate) fn place_bid(env: Env, job_id: String, bidder: Address, amount: i128) {
     bidder.require_auth();
-    check_not_frozen(&env);
+    check_not_frozen(&env, &job_id);
     if amount <= 0 {
         panic!("Bid amount must be positive");
     }
@@ -297,7 +297,7 @@ pub(crate) fn place_bid(env: Env, job_id: String, bidder: Address, amount: i128)
 /// Refund a bidder that is no longer the current winner.
 pub(crate) fn refund_bid(env: Env, job_id: String, bidder: Address) {
     bidder.require_auth();
-    check_not_frozen(&env);
+    check_not_frozen(&env, &job_id);
     let auction: LiveAuction = env
         .storage()
         .instance()
