@@ -326,6 +326,8 @@ pub enum DataKey {
     PendingQuorumChange(u32),
     /// Delay between a passed proposal and its execution.
     ExecutionDelaySeconds,
+    /// Status an escrow had before it was frozen, restored on unfreeze
+    PreFreezeStatus(String),
 }
 
 pub(crate) const DEFAULT_QUORUM_THRESHOLD_BPS: u32 = 1_000;
